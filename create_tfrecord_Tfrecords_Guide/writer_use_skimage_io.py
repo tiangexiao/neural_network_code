@@ -1,4 +1,5 @@
 #如何写入tfrecord
+#使用了skimage.io将图片转化为一个numpy数组，然后转换
 #url: http://warmspringwinds.github.io/tensorflow/tf-slim/2016/12/21/tfrecords-guide/
 
 
