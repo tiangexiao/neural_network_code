@@ -1,5 +1,5 @@
 #如何写入tfrecord
-#使用了skimage.io将图片转化为一个numpy数组，然后转换
+#使用了numpy来保存图片的数据
 #url: http://warmspringwinds.github.io/tensorflow/tf-slim/2016/12/21/tfrecords-guide/
 
 
@@ -25,15 +25,9 @@ tfrecords_filename = '../tfrecord/cat.tfrecords'
 
 writer = tf.python_io.TFRecordWriter(tfrecords_filename)
 
-cat_img = io.imread(cat1_path)
-cat_string = cat_img.tostring()
-
-
-reconstructed_cat_1d = np.fromstring(cat_string, dtype=np.uint8)
-reconstructed_cat_img = reconstructed_cat_1d.reshape(cat_img.shape)
 
 for cat_path in cat_paths:
-    img = np.array(Image.open(cat_path))
+    img = np.array(Image.open(cat_path))  #实际上这条语句等于 img = io.imread(cat_path)
 
     height = img.shape[0]
     weight = img.shape[1]
