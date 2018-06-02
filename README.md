@@ -1,2 +1,2 @@
 # neural_network_code
-我遇到过的神经网路的代码，一般用tensorflow来写的
+我遇到过的神经网路的代码，用tensorflow来写的
