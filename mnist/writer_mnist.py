@@ -1,5 +1,4 @@
 #如何把mnist数据集用tfrecord来进行重写
-#this is part1, part2 in reader_mnist.py
 
 import tensorflow as tf
 import numpy as np
