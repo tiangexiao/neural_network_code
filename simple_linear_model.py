@@ -2,6 +2,7 @@
 定义两个可以更新的Variable：W和b
 定义损失函数loss
 使用迭代器更新loss
+copy: https://github.com/MorvanZhou/tutorials/blob/master/tensorflowTUT/tf5_example2/full_code.py
 """
 import numpy as np
 import tensorflow as tf
