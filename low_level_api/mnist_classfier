@@ -1,0 +1,54 @@
+"""
+使用低级的api编写的只有一层的softmax的分类器
+注意：两个程序不能同时在一个gup上运行，否则会报错
+copy from youtube: https://www.youtube.com/watch?v=aNjdw9w_Qyc&list=PLXO45tsB95cKI5AIlf5TxxFPzb-0zeVZ8&t=0s&index=23
+"""
+import tensorflow as tf
+from tensorflow.examples.tutorials.mnist import input_data
+mnist = input_data.read_data_sets('MNIST_data', one_hot=True)
+
+def add_layer(input, in_size, out_size, activation_function=None):
+
+    Weight = tf.Variable(tf.random_uniform([in_size, out_size]))
+    bias = tf.Variable(tf.zeros([1, out_size]) + 0.1)
+
+    Wx_plus_b = tf.matmul(input, Weight) + bias
+
+    if activation_function is None:
+        output = Wx_plus_b
+    else:
+        output = activation_function(Wx_plus_b)
+
+    return output
+
+def get_accuracy(real_input, real_output):
+    prediction = sess.run(prediction_layer, feed_dict={xs:real_input})
+    correct_predict = tf.equal(tf.argmax(prediction, 1), tf.argmax(real_output, 1) )
+    accuracy = tf.reduce_mean(tf.cast(correct_predict, tf.float32))   #这里很坑case 不等于cast
+    result = sess.run(accuracy)
+    return result
+
+
+
+xs = tf.placeholder(tf.float32, shape=[None,28*28])
+ys = tf.placeholder(tf.float32, shape=[None, 10])
+
+
+prediction_layer = add_layer(xs, 28*28, 10, activation_function=tf.nn.softmax)
+loss = tf.reduce_mean(- tf.reduce_sum( ys * tf.log(prediction_layer), axis=1))
+
+train = tf.train.GradientDescentOptimizer(0.01).minimize(loss)
+
+variable_init = tf.global_variables_initializer()
+sess = tf.Session()
+
+sess.run(variable_init)
+
+for i in range(10000):
+    batch_xs, batch_ys = mnist.train.next_batch(100)
+    sess.run(train, feed_dict={xs:batch_xs, ys:batch_ys})
+    if i % 50 == 0:
+        print(get_accuracy(mnist.test.images, mnist.test.labels))
+
+
+
